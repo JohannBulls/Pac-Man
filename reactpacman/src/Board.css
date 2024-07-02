@@ -1,0 +1,22 @@
+/* En el archivo Board.css */
+
+.board {
+    display: grid;
+    gap: 0; /* Elimina los espacios entre las celdas */
+    background-color: black; /* Color de fondo similar al mapa de Pacman */
+  }
+  
+  .cell {
+    width: 30px; /* Ajusta el tamaño de las celdas según tu diseño */
+    height: 30px; /* Ajusta el tamaño de las celdas según tu diseño */
+    border: none; /* Elimina los bordes entre las celdas */
+  }
+  
+  .wall {
+    background-color: blue; /* Color de las paredes */
+  }
+  
+  .empty {
+    background-color: transparent; /* Color de los espacios vacíos */
+  }
+  
