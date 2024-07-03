@@ -1,0 +1,10 @@
+.App {
+    height: 100vh;
+    overflow: hidden;
+    font-size: 0;
+    /* Agrega esto para que el tablero se ajuste a la pantalla completa */
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
