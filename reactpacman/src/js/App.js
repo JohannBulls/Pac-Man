@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Board from "./Board";
 import "../css/App.css";
 import musicFile from "../assets/sounds/music.mp3";
+import moveSoundFile from "../assets/sounds/frightened.mp3";
+
 
 const App = () => {
   const initialBoard = [
@@ -32,6 +34,7 @@ const App = () => {
   ];
 
   const [music] = useState(new Audio(musicFile));
+  const [moveSound] = useState(new Audio(moveSoundFile));
   const [pacmanPosition, setPacmanPosition] = useState({ x: 13, y: 10 });
 
   const startGame = () => {
@@ -43,44 +46,51 @@ const App = () => {
     async (event) => {
       let newX = pacmanPosition.x;
       let newY = pacmanPosition.y;
-  
+      let direction;
+
       switch (event.key) {
         case "w":
-          newX = Math.max(pacmanPosition.x - 2, 0);
+          newX = Math.max(pacmanPosition.x - 1, 0);
+          direction = "w";
           break;
         case "s":
-          newX = Math.min(pacmanPosition.x + 2, initialBoard.length - 1);
+          newX = Math.min(pacmanPosition.x + 1, initialBoard.length - 1);
+          direction = "s";
           break;
         case "a":
-          newY = Math.max(pacmanPosition.y - 2, 0);
+          newY = Math.max(pacmanPosition.y - 1, 0);
+          direction = "a";
           break;
         case "d":
-          newY = Math.min(pacmanPosition.y + 2, initialBoard[0].length - 1);
+          newY = Math.min(pacmanPosition.y + 1, initialBoard[0].length - 1);
+          direction = "d";
           break;
         default:
           return;
       }
-  
+
       try {
         const response = await fetch("http://localhost:8080/api/move", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ direction: event.key }),
+          body: JSON.stringify({ direction }),
         });
-  
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-  
-        const result = await response.json();
+
+        const result = await response.text(); // Assuming response is plain text
+        console.log("Move result:", result);
+
         setPacmanPosition({ x: newX, y: newY });
       } catch (error) {
         console.error("Error moving Pacman:", error);
       }
     },
-    [pacmanPosition, initialBoard]
+    [pacmanPosition, initialBoard.length, initialBoard[0].length] // Agregamos initialBoard como dependencia
   );
 
   useEffect(() => {
@@ -95,7 +105,7 @@ const App = () => {
       <div className="container-fluid h-100">
         <div className="row h-100">
           <div className="col-lg-9 p-0">
-            <div className="h-100 d-flex justify-content-center align-items-center">
+            <div className="h-100 d-flex justify-content-center align-items-center" >
               <Board board={initialBoard} pacmanPosition={pacmanPosition} />
             </div>
           </div>
