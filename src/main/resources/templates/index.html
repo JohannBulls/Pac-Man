@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="image/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <title>Board</title>
+    <!-- Load P5.js. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.sound.min.js"></script>
+  </head>
+  <body>
+    <div class="d-flex vh-100">
+      <!-- 75% width for #root -->
+      <div class="d-flex flex-column w-75">
+        <div id="root" class="flex-grow-1 bg-light"></div>
+      </div>
+      <!-- 25% width for the rest -->
+      <div class="d-flex flex-column w-25 p-3 dere">
+        <!-- Navigation Bar -->
+        <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+          <div class="container-fluid">
+            <img th:src="@{/image/title.png}" alt="Pac-Man" class="img-fluid" style="max-width: 50%; height: auto;"/>
+            <div class="d-flex justify-content-end">
+              <form th:action="@{/logout}" method="post">
+                <button type="submit" class="btn btn-danger">Log out</button>
+              </form>
+            </div>
+          </div>
+        </nav>
+    
+        <!-- Centered "Start Game" Button -->
+        <div class="d-flex flex-column align-items-center flex-grow-1">
+          <button class="btn btn-outline-success mb-3" onClick={startGame}>
+            Start Game
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Load React. -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <!-- Load Babel to translate JSX to JS. -->
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Load our React component. -->
+    <script type="text/babel" src="/js/bbComponents.jsx"></script>
+    
+    <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>
