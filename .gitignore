@@ -1,73 +1,36 @@
-# boardliveSPRING
-boardliveSPRING/target/
-boardliveSPRING/.idea/
-boardliveSPRING/.vscode/
-boardliveSPRING/logs/
-boardliveSPRING/*.log
-
-# boardlivefront
-boardlivefront/node_modules/
-boardlivefront/.pnp
-boardlivefront/.pnp.js
-boardlivefront/coverage/
-boardlivefront/build/
-boardlivefront/.DS_Store
-boardlivefront/.env.local
-boardlivefront/.env.development.local
-boardlivefront/.env.test.local
-boardlivefront/.env.production.local
-boardlivefront/npm-debug.log*
-boardlivefront/yarn-debug.log*
-boardlivefront/yarn-error.log*
-
-# General
-.DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# IDE files
-.idea/
-.vscode/
-
-# Maven
+HELP.md
 target/
-pom.xml.tag
-pom.xml.releaseBackup
-pom.xml.versionsBackup
-pom.xml.next
-release.properties
-dependency-reduced-pom.xml
-buildNumber.properties
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-# Gradle
-.gradle/
-build/
-
-# Eclipse
+### STS ###
+.apt_generated
 .classpath
+.factorypath
 .project
-.settings/
-bin/
-tmp/
+.settings
+.springBeans
+.sts4-cache
 
-# IntelliJ IDEA
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
-.idea/
-out/
+*.ipr
 
-# NetBeans
-nbproject/private/
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 build/
-nbbuild/
-dist/
-nbdist/
-nbactions.xml
-nb-configuration.xml
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# VS Code
+### VS Code ###
 .vscode/
+
+# Ignore Maven wrapper directory
+.mvn/
