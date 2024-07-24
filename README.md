@@ -3,7 +3,7 @@
 
 Clone the repository:
 ```bash
-git clone https://github.com/JohannBulls/
+git clone https://github.com/JohannBulls/Pac-Man
 ```
 
 ### Running the Application
@@ -15,7 +15,7 @@ docker run --name some-redis -p 45000:6379 -d redis
 ![alt text](images/image.png)
 #### 2. Build and Run Spring Boot Application
 ```bash
-cd REDISWebServices
+cd Pac-Man
 mvn spring-boot:run
 ```
 Now open a browser and go to the following link to login: Login page
@@ -24,7 +24,6 @@ Now open a browser and go to the following link to login: Login page
 
 After logging in you access the board to start drawing Execution
 
-![alt text](images/image3.png)
 
 You can also open a browser and go to the following link to access the project on AWS:
 
