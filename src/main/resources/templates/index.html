@@ -13,6 +13,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/board.css}" />
     <title>Board</title>
     <!-- Load P5.js. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
@@ -30,7 +31,7 @@
         <!-- Navigation Bar -->
         <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
           <div class="container-fluid">
-            <img th:src="@{/image/title.png}" alt="Pac-Man" class="img-fluid" style="max-width: 50%; height: auto;"/>
+            <img th:src="@{/image/title.png}" alt="Pac-Man" class="img-fluid" style="max-width: 50%; height: auto;" />
             <div class="d-flex justify-content-end">
               <form th:action="@{/logout}" method="post">
                 <button type="submit" class="btn btn-danger">Log out</button>
@@ -41,7 +42,7 @@
     
         <!-- Centered "Start Game" Button -->
         <div class="d-flex flex-column align-items-center flex-grow-1">
-          <button class="btn btn-outline-success mb-3" onClick={startGame}>
+          <button class="btn btn-outline-success mb-3" onclick="startGame()">
             Start Game
           </button>
         </div>
