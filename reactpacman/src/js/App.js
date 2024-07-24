@@ -4,12 +4,48 @@ import Board from "./Board";
 import "../css/App.css";
 import musicFile from "../assets/sounds/music.mp3";
 
+/**
+ * Main application component for the Pacman game.
+ * <p>
+ * This component initializes the game board, handles Pacman and ghost movements,
+ * and manages game state including collision detection and music playback.
+ * </p>
+ * 
+ * @component
+ */
 const App = () => {
+  /**
+   * State to store the game board matrix.
+   * @type {Array<Array<number>>}
+   */
   const [board, setBoard] = useState([]);
-  const [music] = useState(new Audio(musicFile));
-  const [pacmanPosition, setPacmanPosition] = useState({ x: 0, y: 0 });
-  const [ghostPosition, setGhostPosition] = useState({ x: 1, y: 1 }); // Inicializa la posición del fantasma
 
+  /**
+   * State to handle music playback.
+   * @type {Audio}
+   */
+  const [music] = useState(new Audio(musicFile));
+
+  /**
+   * State to track Pacman's position on the board.
+   * @type {{ x: number, y: number }}
+   */
+  const [pacmanPosition, setPacmanPosition] = useState({ x: 0, y: 0 });
+
+  /**
+   * State to track the ghost's position on the board.
+   * @type {{ x: number, y: number }}
+   */
+  const [ghostPosition, setGhostPosition] = useState({ x: 1, y: 1 }); // Initializes ghost's position
+
+  /**
+   * Fetches the game board from the server and sets initial positions for Pacman and the ghost.
+   * <p>
+   * This effect runs once when the component mounts, fetching the board matrix and setting the initial positions.
+   * </p>
+   * 
+   * @async
+   */
   useEffect(() => {
     const fetchBoard = async () => {
       try {
@@ -21,12 +57,12 @@ const App = () => {
         }
         const data = await response.json();
         setBoard(data);
-        // Calcula la posición inicial de Pacman
+
+        // Calculate initial positions for Pacman and the ghost
         const initialX = Math.floor(data.length / 2) + 2;
         const initialY = Math.floor(data[0].length / 2) + 1;
         setPacmanPosition({ x: initialX, y: initialY });
 
-        // Calculate initial Ghost position
         const ghostInitialX = Math.floor(data.length / 2) - 1;
         const ghostInitialY = Math.floor(data[0].length / 2) - 1;
         setGhostPosition({ x: ghostInitialX, y: ghostInitialY });
@@ -38,20 +74,45 @@ const App = () => {
     fetchBoard();
   }, []);
 
+  /**
+   * Starts the game by playing the background music.
+   * <p>
+   * This function is triggered when the "Start Game" button is clicked.
+   * </p>
+   */
   const startGame = () => {
     music.play();
     console.log("Game started");
   };
 
+  /**
+   * Checks for collision between Pacman and the ghost.
+   * <p>
+   * Displays an alert and pauses the music if Pacman collides with the ghost.
+   * </p>
+   * 
+   * @param {Object} pacman - The position of Pacman.
+   * @param {Object} ghost - The position of the ghost.
+   * @returns {boolean} - True if collision occurs, otherwise false.
+   */
   const checkCollision = (pacman, ghost) => {
     if (pacman.x === ghost.x && pacman.y === ghost.y) {
       alert("Pacman ha sido atrapado por el fantasma. ¡Game Over!");
-      // Detén el juego aquí si es necesario
+      music.pause(); // Example of stopping the music
       return true;
     }
     return false;
   };
 
+  /**
+   * Handles keyboard input to move Pacman.
+   * <p>
+   * Moves Pacman based on the key pressed, updates the position, and checks for collisions.
+   * </p>
+   * 
+   * @param {KeyboardEvent} event - The keyboard event triggered by key presses.
+   * @async
+   */
   const handleKeyDown = useCallback(
     async (event) => {
       let newX = pacmanPosition.x;
@@ -79,7 +140,7 @@ const App = () => {
           return;
       }
 
-      // Verifica si la nueva posición de Pacman colisiona con el muro
+      // Check if Pacman's new position collides with a wall
       if (board[newX][newY] !== 1) {
         try {
           const response = await fetch("http://localhost:8080/api/move", {
@@ -99,10 +160,9 @@ const App = () => {
 
           setPacmanPosition({ x: newX, y: newY });
 
-          // Verifica la colisión con el fantasma
+          // Check collision with ghost
           if (checkCollision({ x: newX, y: newY }, ghostPosition)) {
-            // Puedes detener el juego aquí si es necesario
-            music.pause(); // Ejemplo de detener la música
+            // Stop the game if necessary
           }
         } catch (error) {
           console.error("Error moving Pacman:", error);
@@ -130,7 +190,7 @@ const App = () => {
               <Board
                 board={board}
                 pacmanPosition={pacmanPosition}
-                ghostPosition={ghostPosition} // Pasa la posición del fantasma al componente Board
+                ghostPosition={ghostPosition} // Passes the ghost position to the Board component
               />
             </div>
           </div>

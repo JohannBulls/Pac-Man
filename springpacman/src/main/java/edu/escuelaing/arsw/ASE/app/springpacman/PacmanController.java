@@ -6,15 +6,32 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * Controller for handling Pacman game actions and requests.
+ */
 @RestController
 @RequestMapping("/api")
 public class PacmanController {
 
+    /**
+     * Endpoint to start the Pacman game.
+     * 
+     * @return A {@link String} message indicating that the game has started.
+     */
     @GetMapping("/start")
     public String startGame() {
         return "Game Started";
     }
 
+    /**
+     * Endpoint to move Pacman in a specified direction.
+     * 
+     * @param payload A {@link Map} containing the move direction. The map should have a key "direction" with a {@link String} value representing the direction.
+     * @return A {@link ResponseEntity} containing a message about the move status. The response status can be:
+     *         - {@link HttpStatus#OK} if the direction is valid and the move is successful.
+     *         - {@link HttpStatus#BAD_REQUEST} if the direction is missing or invalid.
+     *         - {@link HttpStatus#INTERNAL_SERVER_ERROR} if there is an error processing the move.
+     */
     @PostMapping("/move")
     public ResponseEntity<String> movePacman(@RequestBody Map<String, String> payload) {
         String direction = payload.get("direction");
@@ -22,16 +39,17 @@ public class PacmanController {
             return ResponseEntity.badRequest().body("Direction is missing");
         }
         try {
-            if ("w".equals(direction)) {
-                return ResponseEntity.ok("Pacman moved UP");
-            } else if ("s".equals(direction)) {
-                return ResponseEntity.ok("Pacman moved DOWN");
-            } else if ("a".equals(direction)) {
-                return ResponseEntity.ok("Pacman moved LEFT");
-            } else if ("d".equals(direction)) {
-                return ResponseEntity.ok("Pacman moved RIGHT");
-            } else {
-                return ResponseEntity.badRequest().body("Invalid direction: " + direction);
+            switch (direction) {
+                case "w":
+                    return ResponseEntity.ok("Pacman moved UP");
+                case "s":
+                    return ResponseEntity.ok("Pacman moved DOWN");
+                case "a":
+                    return ResponseEntity.ok("Pacman moved LEFT");
+                case "d":
+                    return ResponseEntity.ok("Pacman moved RIGHT");
+                default:
+                    return ResponseEntity.badRequest().body("Invalid direction: " + direction);
             }
 
         } catch (Exception e) {
