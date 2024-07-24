@@ -99,6 +99,16 @@ This project is a Pacman game developed with a Spring Boot backend and a React f
     - Use the arrow keys (`w`, `a`, `s`, `d`) to move Pacman around the board.
     - The game will alert you if Pacman is caught by the ghost.
 
+![alt text](img/image2.png)
+
+### Class Diagram
+
+![alt text](img/image.png)
+
+### Architectural Design
+
+![alt text](img/Diagrama en blanco (1).png)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
