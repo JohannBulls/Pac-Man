@@ -1,15 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../css/Board.css";
 import pacmanImageSrc from "../assets/images/right.gif";
+import ghostImageSrc from "../assets/images/ghost.gif"; // Asegúrate de que la ruta sea correcta
 
-const Board = ({ board, pacmanPosition }) => {
+const Board = ({ board = [], pacmanPosition, ghostPosition }) => {
   const canvasRef = useRef(null);
   const [pacmanImg, setPacmanImg] = useState(null);
+  const [ghostImg, setGhostImg] = useState(null); // Estado para la imagen del fantasma
 
   useEffect(() => {
-    const img = new Image();
-    img.src = pacmanImageSrc;
-    img.onload = () => setPacmanImg(img);
+    const imgPacman = new Image();
+    imgPacman.src = pacmanImageSrc;
+    imgPacman.onload = () => setPacmanImg(imgPacman);
+
+    const imgGhost = new Image();
+    imgGhost.src = ghostImageSrc; // Carga la imagen del fantasma
+    imgGhost.onload = () => setGhostImg(imgGhost);
   }, []);
 
   useEffect(() => {
@@ -41,16 +47,30 @@ const Board = ({ board, pacmanPosition }) => {
           30 
         );
       }
+
+      if (ghostImg) { // Dibuja el fantasma en el tablero
+        ctx.drawImage(
+          ghostImg,
+          ghostPosition.y * 30, 
+          ghostPosition.x * 30, 
+          30, 
+          30 
+        );
+      }
     };
 
     drawBoard();
 
-    return () => {
-    };
-  }, [board, pacmanPosition, pacmanImg]);
+    return () => {};
+  }, [board, pacmanPosition, pacmanImg, ghostPosition, ghostImg]);
 
   return (
-    <canvas ref={canvasRef} width={board[0].length * 30} height={board.length * 30} className="board-canvas"></canvas>
+    <canvas 
+      ref={canvasRef} 
+      width={(board[0]?.length || 0) * 30} 
+      height={(board.length || 0) * 30} 
+      className="board-canvas"
+    ></canvas>
   );
 };
 
