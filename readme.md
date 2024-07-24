@@ -107,7 +107,7 @@ This project is a Pacman game developed with a Spring Boot backend and a React f
 
 ### Architectural Design
 
-![alt text](img/Diagrama en blanco (1).png)
+![alt text](img/Diagrama.png)
 
 ## License
 
