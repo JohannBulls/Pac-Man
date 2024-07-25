@@ -1,4 +1,4 @@
-package edu.escuelaing.arsw.ASE.app.springpacman;
+package edu.escuelaing.arsw.ASE.app.springpacman.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

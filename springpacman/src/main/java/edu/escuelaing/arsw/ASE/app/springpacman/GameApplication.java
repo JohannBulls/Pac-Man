@@ -12,18 +12,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * </p>
  */
 @SpringBootApplication
-public class SpringpacmanApplication {
+public class GameApplication {
 
     /**
      * Main method to start the Spring Boot application.
      * <p>
-     * This method launches the application by invoking {@link SpringApplication#run(Class, String...)}.
+     * This method launches the application by invoking {@link GameApplication#run(Class, String...)}.
      * </p>
      * 
      * @param args Command-line arguments passed to the application.
      */
     public static void main(String[] args) {
-        SpringApplication.run(SpringpacmanApplication.class, args);
+        SpringApplication.run(GameApplication.class, args);
     }
 
 }
