@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #363535;
+}
+
+.dere {
+    font-family: "Poppins", sans-serif;
+    background: #0b28aa;
+}
+
+/*------------ Login container ------------*/
+.box-area {
+    width: 930px;
+}
+
+/*------------ Right box ------------*/
+.right-box {
+    padding: 40px 30px 40px 40px;
+}
+
+/*------------ Custom Placeholder ------------*/
+::placeholder {
+    font-size: 16px;
+}
+
+.rounded-4 {
+    border-radius: 20px;
+}
+
+.rounded-5 {
+    border-radius: 30px;
+}
+
+/*------------ For small screens------------*/
+@media only screen and (max-width: 768px) {
+    .box-area {
+        margin: 0 10px;
+    }
+
+    .left-box {
+        height: 100px;
+        overflow: hidden;
+    }
+
+    .right-box {
+        padding: 20px;
+    }
+}
+
+.matrix-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+}
+
+.wall {
+    background-color: black;
+}
+
+.path {
+    background-color: white;
+}
+
+/* Prevent image dragging */
+img {
+    user-drag: none;
+    /* For WebKit-based browsers */
+    -webkit-user-drag: none;
+    /* For WebKit-based browsers */
+    -moz-user-select: none;
+    /* For Firefox */
+    -webkit-user-select: none;
+    /* For WebKit-based browsers */
+    -ms-user-select: none;
+    /* For IE/Edge */
+    user-select: none;
+    /* Standard syntax */
+}

@@ -1,0 +1,107 @@
+/* src/Game.css */
+
+.game-container {
+    display: flex;
+    flex-direction: row;
+    width: 210vh;
+    height: 100vh;
+    background-color: #6dafed;
+    color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  
+  .scoreboard, .game-wrapper, .controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+  
+  .scoreboard {
+    background-color: #6dafed;
+    padding: 20px;
+    border-right: 2px;
+    width: 20%;
+  }
+  
+  .scoreboard h2 {
+    margin-bottom: 20px;
+  }
+  
+  .scoreboard table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .scoreboard th, .scoreboard td {
+    border: 5px solid white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .game-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200%;
+  }
+  
+  .game-board {
+    position: relative;
+    width: 800px;
+    height: 600px;
+    background-image: url('../images/ice1_z.jpg');
+    border: 5px solid gold;
+  }
+  
+  .controls {
+    background-color: #6dafed;
+    padding: 20px;
+    border-left: 2px;
+    width: 20%;
+  }
+  
+  .controls button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .controls button:hover {
+    background-color: #ccc;
+  }
+  
+  .game-over {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  
+  .game-over-content {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .game-over-content button {
+    margin-top: 20px;
+  }
+  
