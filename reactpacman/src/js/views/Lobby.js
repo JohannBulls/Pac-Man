@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useWebSocket } from '../WebSocketContext';
 import loginTitle from "../../assets/images/title.png";
 import "./Lobby.css";
-import Game from './Game.jsx';
+import Game from './Game';
 
 const Lobby = () => {
   const [players, setPlayers] = useState([]);
@@ -16,25 +16,32 @@ const Lobby = () => {
   const { socket } = useWebSocket();
 
   useEffect(() => {
+    // Verifica si los datos del jugador o el socket no están disponibles
     if (!playerData || !socket) {
       navigate('/');
       return;
     }
 
-    socket.onmessage = (event) => {
+    // Maneja los mensajes recibidos del socket
+    const handleSocketMessage = (event) => {
       const data = JSON.parse(event.data);
       if (data.type === 'UPDATE_PLAYERS') {
         setPlayers(data.players);
       } else if (data.type === 'START_GAME') {
+        console.log("llega a looby", data.matrix);
         setInitialMatrix(data.matrix);
         setGameStarted(true);
+      } else if (data.type === 'UPDATE_GAME_STATE') {
+        console.log("Actualización del estado del juego recibida", data);
+        setInitialMatrix(data.matrix);
       }
     };
 
+    socket.addEventListener('message', handleSocketMessage);
+
+    // Limpia el manejador de mensajes cuando el componente se desmonta
     return () => {
-      if (socket) {
-        socket.onmessage = null;
-      }
+      socket.removeEventListener('message', handleSocketMessage);
     };
   }, [navigate, playerData, socket]);
 
@@ -49,9 +56,8 @@ const Lobby = () => {
     try {
       await fetch('/logout', {
         method: 'POST',
-        credentials: 'include', // Asegúrate de enviar las cookies de sesión si es necesario
+        credentials: 'include',
       });
-
       navigate('/');
     } catch (error) {
       console.error('Logout failed:', error);
@@ -60,13 +66,10 @@ const Lobby = () => {
 
   return (
     <div className="d-flex vh-100">
-      <div className="d-flex flex-column w-75">
-        <div id="Game" className="flex-grow-1 bg-light">
-          {gameStarted && initialMatrix && playerData && players && (
-            <Game initialMatrix={initialMatrix} currentPlayer={playerData} players={players} />
-          )}
+      <div className="d-flex w-75">
+        <div className="bg-dark justify-content-center flex-column flex-grow-1 bg-light">
+          <Game matrix={initialMatrix} />
         </div>
-
       </div>
       <div className="d-flex flex-column w-25 p-3 dere">
         <nav className="navbar navbar-expand-lg mb-3">

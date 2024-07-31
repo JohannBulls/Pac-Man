@@ -1,0 +1,19 @@
+/* src/js/views/Character.css */
+
+.character {
+  position: absolute; /* Asegúrate de que el posicionamiento sea adecuado para tu diseño */
+  width: 30px; /* Ajusta el tamaño según sea necesario */
+  height: 30px; /* Ajusta el tamaño según sea necesario */
+  border-radius: 50%; /* Esto hace que el personaje sea circular */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pacman {
+  background-color: yellow; /* Estilo para Pacman */
+}
+
+.ghost {
+  background-color: red; /* Estilo para el fantasma */
+}

@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Controller for handling login-related requests.
- * This controller manages player data assignment for thieves and police officers.
- */
 @RestController
 @RequestMapping("/login")
 @CrossOrigin(origins = "*")
@@ -31,23 +27,11 @@ public class LoginController {
         {22, 37}, {23, 37}, {24, 37}, {25, 37}
     };
 
-
-    /**
-     * Resets the indices for thief and police positions.
-     * This method is useful for reinitializing the state of the controller.
-     */
     public void resetIndices() {
         this.currentThiefIndex = 0;
         this.currentPoliceIndex = 0;
     }
 
-    /**
-     * Retrieves player data based on the role (thief or police).
-     * Assigns a unique position to the player and increments the index for the next assignment.
-     *
-     * @param isThief boolean indicating if the player is a thief (true) or a police officer (false)
-     * @return ResponseEntity containing player data if successful, or a bad request status if no positions are available
-     */
     @GetMapping("/getPlayerData")
     public synchronized ResponseEntity<Map<String, Object>> getPlayerData(@RequestParam boolean isThief) {
         Map<String, Object> playerData = new HashMap<>();

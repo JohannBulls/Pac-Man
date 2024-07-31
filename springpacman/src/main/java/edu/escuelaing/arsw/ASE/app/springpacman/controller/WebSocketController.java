@@ -284,7 +284,7 @@ public class WebSocketController extends TextWebSocketHandler {
 
             if (totalThiefLives == 0) {
                 gameOver = true;
-                winner = "Police";
+                winner = "Pacman";
                 sendGameOverMessage();
                 return;
             }
@@ -292,9 +292,9 @@ public class WebSocketController extends TextWebSocketHandler {
             if (--timeLeft <= 0) {
                 gameOver = true;
                 if (totalPoliceScore > totalThiefScore) {
-                    winner = "Police";
+                    winner = "Pacman";
                 } else if (totalThiefScore > totalPoliceScore) {
-                    winner = "Thieves";
+                    winner = "Ghost";
                 } else {
                     winner = "Draw";
                 }
@@ -382,6 +382,10 @@ public class WebSocketController extends TextWebSocketHandler {
      * @param session the WebSocket session
      * @throws Exception if an error occurs
      */    
+    private boolean isValidMove(int top, int left) {
+        return top >= 0 && top < gameState.getMatrix().length && left >= 0 && left < gameState.getMatrix()[0].length;
+    }
+    
     private void handlePlayerMoveMessage(Map<String, Object> data, WebSocketSession session) throws Exception {
         int playerId = ((Double) data.get("id")).intValue();
         int previousTop = ((Double) data.get("previousTop")).intValue();
@@ -389,42 +393,41 @@ public class WebSocketController extends TextWebSocketHandler {
         int top = ((Double) data.get("top")).intValue();
         int left = ((Double) data.get("left")).intValue();
         String direction = (String) data.get("direction");
-        boolean paso1 = (Boolean) data.get("paso1"); 
-
-        System.out.println("Recibiendo movimiento del jugador:" + ", "  + playerId + ", "  + top + ", "  + left + ", " + direction);
+        boolean paso1 = (Boolean) data.get("paso1");
+    
+        System.out.println("Recibiendo movimiento del jugador: " + playerId + ", " + top + ", " + left + ", " + direction);
     
         synchronized (players) {
             Player player = players.get(session.getId());
-            System.out.println(session.getId());
-            System.out.println(player);
-
             if (player != null) {
-                player.setTop(top);
-                player.setLeft(left);
-                player.setDirection(direction);
-                player.setPaso1(paso1); 
-
-                if (player.isThief() && player.getLives() == 0) {
-                    return; 
-                }
-
-                if (gameState.getMatrix()[top][left] == 9  && player.isThief() ) { 
-                    player.setScore(player.getScore() + 100);
-                    gameState.setPosition(top, left, 0); 
-                }
-
-                gameService.updatePlayerPosition(player);
-            }
-        }
+                if (isValidMove(top, left)) {  // Verifica si el movimiento es válido
+                    player.setTop(top);
+                    player.setLeft(left);
+                    player.setDirection(direction);
+                    player.setPaso1(paso1);
     
-        synchronized (gameState) {
-            
-            gameState.setPosition(previousTop, previousLeft, 0); 
-            gameState.setPosition(top, left, playerId); 
+                    if (player.isThief() && player.getLives() == 0) {
+                        return;
+                    }
+    
+                    synchronized (gameState) {
+                        if (gameState.getMatrix()[top][left] == 9 && player.isThief()) {
+                            player.setScore(player.getScore() + 100);
+                            gameState.setPosition(top, left, 0);
+                        }
+                        gameState.setPosition(previousTop, previousLeft, 0);
+                        gameState.setPosition(top, left, playerId);
+                    }
+    
+                    gameService.updatePlayerPosition(player);
+                }
+            }
         }
     
         sendGameStateToAllSessions();
     }
+    
+    
     
     /**
      * Handles a capture thief message and updates the game state.
@@ -437,7 +440,6 @@ public class WebSocketController extends TextWebSocketHandler {
         int policeId = ((Double) data.get("policeId")).intValue();
         int thiefId = ((Double) data.get("thiefId")).intValue();
     
-        System.out.println("Captura del ladrón " + thiefId + " por el policía " + policeId);
     
         synchronized (players) {
             Player police = null;
@@ -526,6 +528,18 @@ public class WebSocketController extends TextWebSocketHandler {
      *
      * @param message the message to send
      */    
+    
+    
+    private void sendGameStateToAllSessions() throws Exception {
+        Map<String, Object> message = new HashMap<>();
+        message.put("type", "UPDATE_GAME_STATE");
+        message.put("matrix", gameState.getMatrix());
+        message.put("players", new ArrayList<>(players.values()));
+        String jsonMessage = gson.toJson(message);
+    
+        sendToAllSessions(jsonMessage);
+    }
+    
     private synchronized void sendToAllSessions(String message) {
         List<WebSocketSession> closedSessions = new ArrayList<>();
         synchronized (sessions) {
@@ -545,6 +559,8 @@ public class WebSocketController extends TextWebSocketHandler {
             sessions.removeAll(closedSessions);
         }
     }
+    
+    
 
     /**
      * Sends an updated player list to all sessions.
@@ -595,7 +611,7 @@ public class WebSocketController extends TextWebSocketHandler {
      * Sends the updated game state to all sessions.
      *
      * @throws Exception if an error occurs
-     */
+     *//*
     private void sendGameStateToAllSessions() throws Exception {
         Map<String, Object> message = new HashMap<>();
         message.put("type", "UPDATE_GAME_STATE");
@@ -604,6 +620,5 @@ public class WebSocketController extends TextWebSocketHandler {
         String jsonMessage = gson.toJson(message);
     
         sendToAllSessions(jsonMessage);
-    }
+    }*/
 }
-

@@ -1,5 +1,10 @@
 # Pacman Game
 
+<a href="https://git.io/typing-svg">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Hi,+I'm+Johann 👋;This+is+my+Github;Nice+to+meet+you!&center=true&size=30&color=00ff00">
+</a>
+
+
 This project is a Pacman game developed with a Spring Boot backend and a React frontend. The backend provides APIs to generate the game board and handle Pacman's movements, while the frontend handles the game's user interface and interactions.
 
 ## Table of Contents
@@ -112,3 +117,8 @@ This project is a Pacman game developed with a Spring Boot backend and a React f
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+
+[![](https://visitcount.itsvg.in/api?id=JohannBulls&icon=0&color=3)](https://visitcount.itsvg.in)
+
+<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
